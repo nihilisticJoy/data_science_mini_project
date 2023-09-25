@@ -1,0 +1,3 @@
+| **Games name** | Platforms | Reviewers |      | Positive percent | comment | Released | Price | Discount | Discounted price | Type | URL  | All_tags |
+| -------------- | --------- | --------- | ---- | ---------------- | ------- | -------- | ----- | -------- | ---------------- | ---- | ---- | -------- |
+|                |           |           |      |                  |         |          |       |          |                  |      |      |          |
