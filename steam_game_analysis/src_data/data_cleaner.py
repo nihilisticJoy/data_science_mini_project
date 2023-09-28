@@ -67,7 +67,8 @@ on_sale = [is_on_sale(v) for v in data['Discount']]
 data.insert(11, "On_sale", on_sale, True)
 
 
-
+# export to csv file
+data.to_csv("result_4.csv")
 
 
 
