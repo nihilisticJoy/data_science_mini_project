@@ -2,10 +2,12 @@ import numpy as np
 import pandas as pd
 import time
 
-FILE_PATH = "../result_3_tags.csv"
+FILE_PATH = "../result_5_tags.csv"
 data = pd.read_csv(FILE_PATH)
 
-# print(data.isnull().sum())
+data.dropna(subset=['Released'], inplace=True)
+
+print(data.isnull().sum())
 #
 # print(data['Discount'].unique())
 #
@@ -41,9 +43,34 @@ data['Discount'].fillna(100, inplace=True)
 
 
 # create new feature `Day_since_release` extracted from `Release`
-def count_days_since_release(release_data):
-    print(release_data)
-    release_time = time.mktime(time.strptime(release_data, "%d %b, %Y"))
+def count_days_since_release(release_date):
+    print(release_date)
+    formats = ["%d %b, %Y", "%Y %m %d", "%d %b %Y", "%b %d, %Y"]
+    release_date = release_date.replace("févr.", "Feb,")
+    release_date = release_date.replace("déc.", "Dec,")
+    release_date = release_date.replace("oct.", "Oct,")
+    release_date = release_date.replace("janv.", "Jan,")
+    release_date = release_date.replace("avr.", "Apr,")
+    release_date = release_date.replace("juil.", "Jul,")
+    release_date = release_date.replace("juin", "Jun,")
+    release_date = release_date.replace("sept.", "Sep,")
+    release_date = release_date.replace("mars", "Mar,")
+    release_date = release_date.replace("aout", "Aug,")
+    release_date = release_date.replace("mai", "May,")
+    release_date = release_date.replace("March", "Mar")
+    release_date = release_date.replace("Coming soon", "15 May, 2024")
+    try_date = release_date
+    for f in formats:
+        try:
+            release_time = time.mktime(time.strptime(try_date, f))
+            break
+        except ValueError:
+           elements = release_date.split(' ')
+           if len(elements) == 2:
+               try_date = "15 " + release_date
+           elif len(elements) == 6:
+                try_date = f"{elements[0]} {elements[2]} {elements[4]}"
+
     return int((time.time() - release_time) / (24 * 60 * 60))
 
 
@@ -68,7 +95,7 @@ data.insert(11, "On_sale", on_sale, True)
 
 
 # export to csv file
-data.to_csv("result_4.csv")
+data.to_csv("result_6.csv")
 
 
 
