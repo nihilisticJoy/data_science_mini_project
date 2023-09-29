@@ -117,19 +117,23 @@ def scrape_game_data(game, writer):
         data_price_raw = game.find(
             "div", class_="col search_price_discount_combined responsive_secondrow"
         ).find("div", class_="col search_discount_and_price responsive_secondrow")
-        data_discount = data_price_raw.find(
-            "div", class_="discount_block search_discount_block no_discount"
-        ).get("data-discount")
-        data_discount_final_prices = data_price_raw.find(
+        data_discount_div = data_price_raw.find_all(
+            "div",
+            class_=[
+                "discount_block search_discount_block",
+                "discount_block search_discount_block no_discount",
+            ],
+        )
+        data_discount = [div.get("data-discount") for div in data_discount_div]
+        discount = data_discount[0] if len(data_discount) == 1 else 0
+
+        final_price = data_price_raw.find(
             "div", class_="discount_final_price"
         ).text.strip()
 
     except:
         final_price = 0
         discount = "None"
-    else:
-        final_price = data_discount_final_prices
-        discount = data_discount
 
     try:
         data_price_raw = game.find(
@@ -186,7 +190,7 @@ def write_csv(game_list):
         "all_tags",
     ]
 
-    with open("./result_5_tags.csv", "w", encoding="utf-8", newline="") as f:
+    with open("./result_6_tags.csv", "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fields)
 
         upper_fields = [field.capitalize() for field in writer.fieldnames]
