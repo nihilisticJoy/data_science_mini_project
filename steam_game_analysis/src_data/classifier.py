@@ -1,6 +1,15 @@
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    confusion_matrix,
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score
+)
 
 
 FILE_PATH = "./clean_data.csv"
@@ -28,15 +37,39 @@ x = x[random_sequence]
 y = y[random_sequence]
 
 
-train_size = int(len(x) * 0.8)
-
-train_data = x[:train_size]
-test_data = x[train_size:]
-train_labels = y[:train_size]
-test_labels = y[train_size:]
+# keep 30% of data for testing
+# Order of the output variables is important
+x_train, x_test, y_train, y_test = train_test_split(
+    x, y, test_size=0.3)
 
 
-classifier = LogisticRegression(max_iter=100000)
-classifier.fit(train_data, train_labels)
-score = classifier.score(test_data, test_labels)
-print("Score:", score)
+model = LogisticRegression(max_iter=100000, class_weight='balanced')
+# fit the model on the training data
+model.fit(x_train, y_train)
+
+# predict y for the test inputs
+y_test_predictions = model.predict(x_test)
+
+# Generate confusion matrix for the predictions
+conf_matrix = confusion_matrix(y_test, y_test_predictions)
+
+
+# evaluation scores
+accuracy = accuracy_score(y_test, y_test_predictions)
+precision = precision_score(y_test, y_test_predictions)
+recall = recall_score(y_test, y_test_predictions)
+f1 = f1_score(y_test, y_test_predictions)
+roc_auc = roc_auc_score(y_test, y_test_predictions)
+
+# display evaluation scores
+print(f"Accuracy = {accuracy.round(4)}")       # Accuracy = 0.7958
+print(f"Precision = {precision.round(4)}")     # Precision = 0.987
+print(f"Recall = {recall.round(4)}")           # Recall = 0.3748
+print(f"F1 Score = {f1.round(4)}")             # F1 Score = 0.5433
+print(f"Roc_auc Score = {roc_auc.round(4)}")   # Roc_auc Score = 0.6862
+
+
+
+
+
+
