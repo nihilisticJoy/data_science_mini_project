@@ -127,7 +127,9 @@ on_sale = [is_on_sale(v) for v in data['Discount']]
 data.insert(11, "On_sale", on_sale, True)
 
 
-print(data.isnull().sum())
+# Convert prices to numerical values. After conversion, the unit of price is cent.
+data['Price'] = data['Price'].replace('[€\, ]', '', regex=True).astype(int)
+data['Final_price'] = data['Final_price'].replace('[€\, ]', '', regex=True).astype(int)
 
 # export to csv file
 data.to_csv("clean_data.csv")
