@@ -11,6 +11,7 @@ from sklearn.metrics import (
     roc_auc_score
 )
 
+np.random.seed(300)
 
 FILE_PATH = "./clean_data.csv"
 original_data = pd.read_csv(FILE_PATH)
@@ -62,11 +63,11 @@ f1 = f1_score(y_test, y_test_predictions)
 roc_auc = roc_auc_score(y_test, y_test_predictions)
 
 # display evaluation scores
-print(f"Accuracy = {accuracy.round(4)}")       # Accuracy = 0.7958
-print(f"Precision = {precision.round(4)}")     # Precision = 0.987
-print(f"Recall = {recall.round(4)}")           # Recall = 0.3748
-print(f"F1 Score = {f1.round(4)}")             # F1 Score = 0.5433
-print(f"Roc_auc Score = {roc_auc.round(4)}")   # Roc_auc Score = 0.6862
+print(f"Accuracy = {accuracy.round(4)}")       # Accuracy = 0.8018
+print(f"Precision = {precision.round(4)}")     # Precision = 0.9919
+print(f"Recall = {recall.round(4)}")           # Recall = 0.3727
+print(f"F1 Score = {f1.round(4)}")             # F1 Score = 0.5418
+print(f"Roc_auc Score = {roc_auc.round(4)}")   # Roc_auc Score = 0.6857
 
 
 
