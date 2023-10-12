@@ -72,14 +72,18 @@ def update_lm_results(n_clicks, features, target, subset_conditions):
         for i in subset_conditions:
             if i == "Non-free":
                 dff = dff[dff["Price"] > 0]
-            elif i == "Only non-zero Discount":
+            elif i == "Non-zero Discount":
                 dff = dff[dff["Discount"] > 0]
+            elif i == "Under 100% Discount":
+                dff = dff[dff["Discount"] < 100]
+            elif i == "Non-zero Positives":
+                dff = dff[dff["Positives"] > 0]
     lm = evaluate_linear_regression(dff, features, target)
 
     layout = get_result_layout(lm)
 
     if len(features) == 1:
-        fig = px.scatter(df, features[0], target, hover_name="Title")
+        fig = px.scatter(dff, features[0], target, hover_name="Title")
         line = px.line(
             x=lm["cleaned_df"][features[0]],
             y=lm["predictions"],

@@ -43,8 +43,18 @@ class Linear_Regression:
                         [
                             html.H3("Data subset"),
                             dcc.Checklist(
-                                ["Non-free", "Only non-zero Discount"],
-                                ["Non-free", "Only non-zero Discount"],
+                                [
+                                    "Non-free",
+                                    "Non-zero Discount",
+                                    "Under 100% Discount",
+                                    "Non-zero Positives",
+                                ],
+                                [
+                                    "Non-free",
+                                    "Non-zero Discount",
+                                    "Under 100% Discount",
+                                    "Non-zero Positives",
+                                ],
                                 id="data_subset",
                             ),
                         ],
