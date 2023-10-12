@@ -6,7 +6,7 @@ import pandas as pd
 
 from layouts.singe_plot import Scatterplot
 from layouts.heatmap import Overview
-from layouts.linear_regression import Linear_Regression
+from layouts.linear_regression import Linear_Regression, get_result_layout
 
 from utils.linear_regression import evaluate_linear_regression
 
@@ -64,5 +64,45 @@ def update_layout(exploration):
     State("lm_target", "value"),
 )
 def update_lm_results(n_clicks, features, target):
+    if n_clicks == 0:
+        return dash.no_update
     lm = evaluate_linear_regression(df, features, target)
-    return str(lm)
+
+    layout = get_result_layout(lm)
+
+    if len(features) == 1:
+        fig = px.scatter(df, features[0], target)
+        line = px.line(
+            x=lm["cleaned_df"][features[0]],
+            y=lm["predictions"],
+            color_discrete_sequence=["red"],
+        )
+        fig.add_traces(line.data)
+
+        scatter_div = html.Div(
+            [dcc.Graph(figure=fig)],
+            id="lm_scatter",
+            style={"width": "50%", "display": "inline-block"},
+        )
+
+        layout = html.Div([layout], style={"width": "50%", "display": "inline-block"})
+        layout = html.Div([layout, scatter_div])
+
+    return layout
+
+
+@callback(Output("lm_features", "options"), Input("lm_target", "value"))
+def update_features_dropdown(target):
+    numerical_cols = [i for i in df.columns if df[i].dtype != "object"][1:]
+    numerical_cols.remove(target)
+
+    return numerical_cols
+
+
+@callback(Output("lm_target", "options"), Input("lm_features", "value"))
+def update_target_dropdown(features):
+    numerical_cols = [i for i in df.columns if df[i].dtype != "object"][1:]
+    for i in features:
+        numerical_cols.remove(i)
+
+    return numerical_cols

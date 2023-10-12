@@ -107,3 +107,18 @@ button:active {
   box-shadow: #D6D6E7 0 3px 7px inset;
   transform: translateY(2px);
 }
+
+.header_style {
+   padding: 10px;
+   background-color: #f5f5f5;
+   border-bottom: 2px solid #ddd;
+}
+
+.label_style {
+   font-weight: bold;
+   margin-right: 10px;
+}
+
+.content_div_style {
+   margin: 20px 0;
+}

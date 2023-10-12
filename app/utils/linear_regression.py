@@ -36,4 +36,6 @@ def evaluate_linear_regression(df, features, target):
         "mse": mse,
         "mae": mae,
         "rmse": rmse,
+        "predictions": model.predict(X),
+        "cleaned_df": dff,
     }
