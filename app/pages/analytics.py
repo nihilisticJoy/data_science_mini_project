@@ -62,16 +62,24 @@ def update_layout(exploration):
     Input("lm_btn", "n_clicks"),
     State("lm_features", "value"),
     State("lm_target", "value"),
+    State("data_subset", "value"),
 )
-def update_lm_results(n_clicks, features, target):
+def update_lm_results(n_clicks, features, target, subset_conditions):
     if n_clicks == 0:
         return dash.no_update
-    lm = evaluate_linear_regression(df, features, target)
+    dff = df
+    if len(subset_conditions) > 0:
+        for i in subset_conditions:
+            if i == "Non-free":
+                dff = dff[dff["Price"] > 0]
+            elif i == "Only non-zero Discount":
+                dff = dff[dff["Discount"] > 0]
+    lm = evaluate_linear_regression(dff, features, target)
 
     layout = get_result_layout(lm)
 
     if len(features) == 1:
-        fig = px.scatter(df, features[0], target)
+        fig = px.scatter(df, features[0], target, hover_name="Title")
         line = px.line(
             x=lm["cleaned_df"][features[0]],
             y=lm["predictions"],

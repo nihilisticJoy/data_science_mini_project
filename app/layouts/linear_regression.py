@@ -55,6 +55,16 @@ class Linear_Regression:
                             "display": "inline-block",
                         },
                     ),
+                    html.Div(
+                        [
+                            html.H3("Data subset"),
+                            dcc.Checklist(
+                                ["Non-free", "Only non-zero Discount"],
+                                ["Non-free", "Only non-zero Discount"],
+                                id="data_subset",
+                            ),
+                        ]
+                    ),
                 ]
             ),
             html.Div(id="lm_results"),
