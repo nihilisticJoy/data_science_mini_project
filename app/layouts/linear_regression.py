@@ -26,10 +26,7 @@ class Linear_Regression:
                                 multi=True,
                             ),
                         ],
-                        style={
-                            "width": "40%",
-                            "display": "inline-block",
-                        },
+                        className="analytics-section",
                     ),
                     html.Div(
                         [
@@ -40,20 +37,7 @@ class Linear_Regression:
                                 clearable=False,
                             ),
                         ],
-                        style={
-                            "width": "40%",
-                            "display": "inline-block",
-                            "padding-left": "4%",
-                        },
-                    ),
-                    html.Div(
-                        [
-                            html.Button("Run", id="lm_btn", n_clicks=0),
-                        ],
-                        style={
-                            "width": "16%",
-                            "display": "inline-block",
-                        },
+                        className="analytics-section",
                     ),
                     html.Div(
                         [
@@ -63,9 +47,17 @@ class Linear_Regression:
                                 ["Non-free", "Only non-zero Discount"],
                                 id="data_subset",
                             ),
-                        ]
+                        ],
+                        className="analytics-section",
                     ),
-                ]
+                    html.Div(
+                        [
+                            html.Button("Run", id="lm_btn", n_clicks=0),
+                        ],
+                        className="analytics-run-button",
+                    ),
+                ],
+                className="analytics-container",
             ),
             html.Div(id="lm_results"),
         ]
