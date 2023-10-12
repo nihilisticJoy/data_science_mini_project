@@ -93,6 +93,8 @@ def update_lm_results(n_clicks, features, target):
 
 @callback(Output("lm_features", "options"), Input("lm_target", "value"))
 def update_features_dropdown(target):
+    if not target:
+        return dash.no_update
     numerical_cols = [i for i in df.columns if df[i].dtype != "object"][1:]
     numerical_cols.remove(target)
 
@@ -101,6 +103,8 @@ def update_features_dropdown(target):
 
 @callback(Output("lm_target", "options"), Input("lm_features", "value"))
 def update_target_dropdown(features):
+    if not features:
+        return dash.no_update
     numerical_cols = [i for i in df.columns if df[i].dtype != "object"][1:]
     for i in features:
         numerical_cols.remove(i)
