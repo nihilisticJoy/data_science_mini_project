@@ -49,7 +49,8 @@ data['Discount'].fillna(100, inplace=True)
 
 
 # create new feature `Day_since_release` extracted from `Release`
-def count_days_since_release(release_date):
+
+def get_release_time(release_date):
     print(release_date)
     formats = ["%d %b, %Y", "%Y %m %d", "%d %b %Y", "%b %d, %Y", "%Y", "%b %Y"]
     release_date = release_date.replace("févr.", "Feb,")
@@ -89,6 +90,7 @@ def count_days_since_release(release_date):
     release_date = release_date.replace("Coming soon", "2024")
     release_date = release_date.replace("To be announced", "2024")
 
+    release_time = time.time()
     try_date = release_date
     for f in formats:
         try:
@@ -103,12 +105,29 @@ def count_days_since_release(release_date):
         except OverflowError:
             release_time = 0
             break
+    return release_time
 
+
+def count_days_since_release(release_time):
     return int((time.time() - release_time) / (24 * 60 * 60))
 
 
-days_since_release = [count_days_since_release(v) for v in data['Released']]
+def get_season(release_time):
+    month = time.strftime("%b", time.gmtime(release_time))
+    seasons = [["Dec", "Jan", "Feb"], ["Mar", "Apr", "May"], ["Jun", "Jul", "Aug"], ["Sep", "Oct", "Nov"]]
+    for i, season in enumerate(seasons):
+        if month in season:
+            print(month, " season: ", i)
+            return i
+    raise ValueError("There is no season for month:", month)
+
+
+release_times = [get_release_time(v) for v in data['Released']]
+days_since_release = [count_days_since_release(v) for v in release_times]
+release_seasons = [get_season(v) for v in release_times]
+
 data.insert(8, "Day_since_release", days_since_release, True)
+data.insert(9, "Season", release_seasons, True)
 
 
 
@@ -127,9 +146,12 @@ on_sale = [is_on_sale(v) for v in data['Discount']]
 data.insert(11, "On_sale", on_sale, True)
 
 
-# Convert prices to numerical values. After conversion, the unit of price is cent.
+
+# convert prices to numerical values. After conversion, the unit of price is cent.
 data['Price'] = data['Price'].replace('[€\, ]', '', regex=True).astype(int)
 data['Final_price'] = data['Final_price'].replace('[€\, ]', '', regex=True).astype(int)
+
+
 
 # export to csv file
 data.to_csv("clean_data.csv")
