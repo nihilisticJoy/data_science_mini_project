@@ -1,7 +1,9 @@
 from dash import Dash, html, dcc, Input, Output, callback
 import dash
 
-app = Dash(__name__, use_pages=True)
+external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
+
+app = Dash(__name__, use_pages=True, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div(
     [

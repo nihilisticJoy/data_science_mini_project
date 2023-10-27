@@ -147,3 +147,60 @@ button:active {
 .analytics-dropdown {
    width: 100%;
 }
+
+.grid-container {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   gap: 10px;  /* sets a gap between grid items */
+}
+
+.grid-item {
+   flex: 0 0 calc(33.3333% - 10px);
+   box-sizing: border-box;
+}
+
+.input-class {
+   width: 100%;
+   box-sizing: border-box;
+   padding: 5px;
+   border: 1px solid #d0d0d0;
+}
+
+/* styles.css in the assets folder */
+
+.flex-container {
+   display: flex;
+}
+
+.flex-child {
+   flex: 1;
+}
+
+.target-div {
+   margin-right: 10px;
+}
+
+.data-subset-div {
+   margin-left: 10px;
+}
+
+/* styles.css in the assets folder */
+
+.result-container {
+   text-align: center;
+   margin-top: 20px;
+}
+
+.predicted-value {
+   font-size: 24px;
+   color: blue;
+   border: 1px solid #ddd;
+   padding: 10px;
+   text-align: center;
+   background-color: #f9f9f9;
+   border-radius: 4px;
+   margin-top: 10px;
+   width: 150px;
+   margin: auto;
+}

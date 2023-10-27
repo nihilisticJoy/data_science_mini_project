@@ -39,3 +39,14 @@ def evaluate_linear_regression(df, features, target):
         "predictions": model.predict(X),
         "cleaned_df": dff,
     }
+
+
+def predict_linear_regression(df, features, target, X_predict):
+    dff = df[features + [target]].dropna()
+    X = dff[features]
+    y = dff[target]
+
+    model = LinearRegression().fit(X, y)
+    prediction = model.predict(X_predict)
+
+    return prediction
