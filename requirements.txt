@@ -3,3 +3,7 @@ pandas
 plotly
 scikit-learn
 python-dotenv
+scipy
+Flask
+numpy
+gunicorn

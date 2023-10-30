@@ -1,9 +1,12 @@
 from dash import Dash, html, dcc, Input, Output, callback
 import dash
+from flask import Flask
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
-app = Dash(__name__, use_pages=True, external_stylesheets=external_stylesheets)
+server = Flask(__name__)
+app = Dash(use_pages=True, external_stylesheets=external_stylesheets, server=server)
+
 
 app.layout = html.Div(
     [
@@ -39,4 +42,4 @@ app.layout = html.Div(
 )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=8080, host="127.0.0.1")
