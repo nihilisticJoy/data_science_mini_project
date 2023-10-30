@@ -20,7 +20,7 @@ EXPLORATION_TYPE = {
     "Linear regression": Linear_Regression,
     "Prediction": Prediction,
 }
-FILE_PATH = "steam_game_analysis/src_data/clean_data.csv"
+FILE_PATH = "../steam_game_analysis/src_data/clean_data.csv"
 
 dash.register_page(__name__, path="/analytics")
 

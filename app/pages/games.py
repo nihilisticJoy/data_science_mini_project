@@ -4,7 +4,7 @@ import pandas as pd
 
 dash.register_page(__name__, path="/games")
 
-FILE_PATH = "steam_game_analysis/src_data/clean_data.csv"
+FILE_PATH = "../steam_game_analysis/src_data/clean_data.csv"
 df = pd.read_csv(FILE_PATH)
 
 layout = html.Div(
