@@ -1,7 +1,7 @@
 import pandas as pd
 import time
 
-FILE_PATH = "../result_6_tags.csv"
+FILE_PATH = "../../result_6_tags.csv"
 data = pd.read_csv(FILE_PATH)
 
 # remove all Nas in title (5 cases)
