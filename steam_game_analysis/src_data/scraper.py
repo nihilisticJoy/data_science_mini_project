@@ -20,8 +20,8 @@ def get_html(url):
 
 def get_games(html):
     soup = BeautifulSoup(html, "lxml")
-    web = r"^https://store.steampowered.com/app/"
-    games = soup.find_all("a", href=re.compile(web))
+    link_prefix = r"^https://store.steampowered.com/app/"
+    games = soup.find_all("a", href=re.compile(link_prefix))
     return games
 
 
@@ -212,6 +212,7 @@ def main():
             game_list.extend(games)
             start += 100
             url = f"https://store.steampowered.com/search/results/?query&start={start}&count=100&tags=9"
+            break
         else:
             break
 
