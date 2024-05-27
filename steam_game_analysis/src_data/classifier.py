@@ -17,7 +17,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 
 np.random.seed(350)
 
-FILE_PATH = "./clean_data.csv"
+FILE_PATH = "cleaned_data.csv"
 original_data = pd.read_csv(FILE_PATH)
 
 print(original_data['On_sale'].value_counts())
