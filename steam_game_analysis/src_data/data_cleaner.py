@@ -1,7 +1,7 @@
 import pandas as pd
 import time
 
-FILE_PATH = "../../result_6_tags.csv"
+FILE_PATH = "result_6_tags.csv"
 data = pd.read_csv(FILE_PATH)
 
 # remove all Nas in title (5 cases)
@@ -154,7 +154,7 @@ data['Final_price'] = data['Final_price'].replace('[€\, ]', '', regex=True).as
 
 
 # export to csv file
-data.to_csv("clean_data.csv")
+data.to_csv("cleaned_data.csv")
 
 
 
